@@ -30,3 +30,12 @@
 *.exe
 *.out
 *.app
+
+# cmake
+cmake-build-debug
+
+# ide
+.idea
+
+*.pdb
+**/.DS_Store
