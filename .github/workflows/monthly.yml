@@ -1,0 +1,35 @@
+name: Monthly Job
+
+on:
+    workflow_dispatch:
+
+    schedule:
+        -   cron: '0 0 20 * *'
+
+jobs:
+    run-and-commit:
+        runs-on: ubuntu-latest
+
+        steps:
+            -   name: Checkout repository
+                uses: actions/checkout@v3
+
+            -   name: Set up Rust
+                uses: dtolnay/rust-toolchain@stable
+
+            -   name: Run your Rust code
+                run: |
+                    cargo run # Replace with your actual Rust command
+
+            -   name: Configure git
+                run: |
+                    git config --global user.name 'github-actions[bot]'
+                    git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+
+            -   name: Commit and push changes
+                run: |
+                    git add .
+                    git commit -m "Automated monthly update"
+                    git push
+                env:
+                    GITHUB_TOKEN: ${{ secrets.GTOKEN }}
