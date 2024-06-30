@@ -12,7 +12,7 @@ jobs:
 
         steps:
             -   name: Checkout repository
-                uses: actions/checkout@v3
+                uses: actions/checkout@v4
 
             -   name: Set up Rust
                 uses: dtolnay/rust-toolchain@stable
@@ -23,13 +23,12 @@ jobs:
 
             -   name: Configure git
                 run: |
-                    git config --global user.name 'github-actions[bot]'
-                    git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+                    git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+                    git config --local user.name "github-actions[bot]"
+                    git commit -a -m "Add changes"
 
-            -   name: Commit and push changes
-                run: |
-                    git add .
-                    git commit -m "Automated monthly update"
-                    git push
-                env:
-                    GITHUB_TOKEN: ${{ secrets.GTOKEN }}
+            -   name: Push changes
+                uses: ad-m/github-push-action@master
+                with:
+                    github_token: ${{ secrets.GTOKEN }}
+                    branch: ${{ github.ref }}
