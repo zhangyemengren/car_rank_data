@@ -30,10 +30,10 @@ fn get_data(new_energy_type: Option<&str>) {
                 Local::now()
             })
     } else {
-        // 减去 50 天 通常10日后出上一月统计
-        Local::now() - Duration::days(50)
+        // 通常10日后出上一月统计 定时任务20号执行
+        Local::now() - Duration::days(30)
     };
-
+    println!("Past date: {}", past_date);
     let year = past_date.year();
     let month = format!("{:02}", past_date.month());
     let date_str = format!("{}{}", year, month);
